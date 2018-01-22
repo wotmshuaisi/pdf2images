@@ -4,7 +4,7 @@ from wand.image import Image, Color
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 def get_pdf_data(filename):
-    reader = mem.get(filename, None)
+    reader = {filename:None,}
     if reader is None:
         reader = PdfFileReader(filename, strict=False)
         mem[filename] = reader
