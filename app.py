@@ -3,13 +3,10 @@ import io
 from wand.image import Image, Color
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
-mem = {}
-
-
 def get_pdf_data(filename):
     reader = mem.get(filename, None)
     if reader is None:
-        reader = PdfFileReader(filename, strict=True)
+        reader = PdfFileReader(filename, strict=False)
         mem[filename] = reader
     return reader
 
@@ -27,9 +24,9 @@ def convert(filename, res=120):
         pdf_bytes.seek(0)
 
         img = Image(file=pdf_bytes, resolution=res)
-        img.format = 'png'
+        img.format = 'jpg'
         img.compression_quality = 60
-        img.background_color = Color('white')
+        img.background_color = Color('#fff')
         img_path = "%s-%d.png" % (filename[:filename.rindex('.')], page)
         img.save(filename=img_path)
         img.destroy()
